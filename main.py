@@ -45,6 +45,6 @@ print(f'\nUser Points = {user_points}\nComputer Points = {computer_points}\n')
 if user_points > computer_points:
     print('User Wins !!')
 elif user_points < computer_points:
-    print('Computer Wins !!')
+    print('Computer Wins ! Better luck next time')
 else:
-    print('Draw')
+    print('Draw !')
