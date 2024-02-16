@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rock Paper Scissors</title>
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f3f4f6;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    .container {
+        background-color: #ffffff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        max-width: 400px;
+        width: 90%;
+    }
+    h1 {
+        color: #333333;
+        margin-top: 0;
+    }
+    button {
+        background-color: #4CAF50;
+        border: none;
+        color: white;
+        padding: 12px 24px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 10px;
+        cursor: pointer;
+        border-radius: 8px;
+        transition: background-color 0.3s ease;
+    }
+    button:hover {
+        background-color: #45a049;
+    }
+    #result {
+        font-size: 1.2em;
+        margin-top: 20px;
+        color: #333333;
+    }
+</style>
+</head>
+<body>
+    <div class="container">
+        <h1>Rock Paper Scissors</h1>
+        <button onclick="startGame()">Start Game</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function startGame() {
+            var possibleMoves = ['rock', 'paper', 'scissor'];
+            var numRounds = parseInt(prompt('Enter number of rounds you want to play:'));
+            var userPoints = 0;
+            var computerPoints = 0;
+            var resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '';
+
+            for (var i = 0; i < numRounds; i++) {
+                var userMove = prompt('Enter your move (rock, paper, or scissor):').toLowerCase();
+                var computerMove = possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
+
+                if (userMove === 'rock') {
+                    if (computerMove === 'paper') {
+                        computerPoints++;
+                    } else if (computerMove === 'scissor') {
+                        userPoints++;
+                    }
+                } else if (userMove === 'paper') {
+                    if (computerMove === 'rock') {
+                        userPoints++;
+                    } else if (computerMove === 'scissor') {
+                        computerPoints++;
+                    }
+                } else if (userMove === 'scissor') {
+                    if (computerMove === 'rock') {
+                        computerPoints++;
+                    } else if (computerMove === 'paper') {
+                        userPoints++;
+                    }
+                }
+            }
+
+            resultDiv.innerHTML += `<p>All ${numRounds} rounds finished !</p>`;
+            resultDiv.innerHTML += `<p>User Points = ${userPoints}</p>`;
+            resultDiv.innerHTML += `<p>Computer Points = ${computerPoints}</p>`;
+
+            if (userPoints > computerPoints) {
+                resultDiv.innerHTML += '<p style="color: green;">User Wins !!</p>';
+            } else if (userPoints < computerPoints) {
+                resultDiv.innerHTML += '<p style="color: red;">Computer Wins !!</p>';
+            } else {
+                resultDiv.innerHTML += '<p>Draw</p>';
+            }
+        }
+    </script>
+</body>
+</html>
