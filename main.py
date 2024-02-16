@@ -1,50 +1,48 @@
 import random
+from fuzzywuzzy import process
 
+def start_game():
+    possible_moves = ['rock', 'paper', 'scissors']
+    num_rounds = int(input('Enter number of rounds you want to play: '))
+    user_points = 0
+    computer_points = 0
 
-# all possible moves
-possible_moves = ['rock', 'paper', 'scissor']
+    for i in range(num_rounds):
+        user_move = input('Enter your move (rock, paper, or scissors): ').lower()
+        # Perform fuzzy matching to find the closest valid move
+        user_move, _ = process.extractOne(user_move, possible_moves)
+        
+        computer_move = random.choice(possible_moves)
 
-# number of round you wish to play
-num_rounds = int(input('Enter number of rounds you want to play : '))
-print()
+        print(f'Round {i + 1}: You chose {user_move}, Computer chose {computer_move}')
 
-# points which both user and computer have initially
-user_points = computer_points = 0
-
-for i in range(num_rounds):
-
-    # move made by user and computer
-    user_move = input('Enter your move : ')
-    computer_move = random.choice(possible_moves)
-
-    # converting user move to lowercase
-    user_move = user_move.lower()
-
-    if user_move == 'rock':
-        if computer_move == 'paper':
-            computer_points += 1
-        elif computer_move == 'scissor':
+        if (
+            (user_move == 'rock' and computer_move == 'scissors') or
+            (user_move == 'paper' and computer_move == 'rock') or
+            (user_move == 'scissors' and computer_move == 'paper')
+        ):
             user_points += 1
-            
-    elif user_move == 'paper':
-        if computer_move == 'rock':
-            user_points += 1
-        elif computer_move == 'scissor':
+            print('You win this round!')
+        elif (
+            (computer_move == 'rock' and user_move == 'scissors') or
+            (computer_move == 'paper' and user_move == 'rock') or
+            (computer_move == 'scissors' and user_move == 'paper')
+        ):
             computer_points += 1
-            
-    elif user_move == 'scissor':
-        if computer_move == 'rock':
-            computer_points += 1
-        elif computer_move == 'paper':
-            user_points += 1
+            print('Computer wins this round!')
+        else:
+            print("It's a draw!")
 
-print(f'\nAll {num_rounds} rounds finished !')
+    print(f'All {num_rounds} rounds finished !')
+    print(f'Your Points = {user_points}')
+    print(f'Computer Points = {computer_points}')
 
-print(f'\nUser Points = {user_points}\nComputer Points = {computer_points}\n')
+    if user_points > computer_points:
+        print('You win the game!!')
+    elif user_points < computer_points:
+        print('Computer wins the game!!')
+    else:
+        print("It's a draw!")
 
-if user_points > computer_points:
-    print('User Wins !!')
-elif user_points < computer_points:
-    print('Computer Wins ! Better luck next time')
-else:
-    print('Draw !')
+if __name__ == "__main__":
+    start_game()

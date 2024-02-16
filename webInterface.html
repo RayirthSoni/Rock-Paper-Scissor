@@ -55,54 +55,113 @@
 <body>
     <div class="container">
         <h1>Rock Paper Scissors</h1>
+        <p>Rules:</p>
+        <p>Rock wins against Scissors.</p>
+        <p>Paper wins against Rock.</p>
+        <p>Scissors win against Paper.</p>
+        <p>For each win, you earn 1 point.</p>
+        <p>For each loss, the computer earns 1 point.</p>
+        <p>In case of a draw, points remain unchanged.</p>
         <button onclick="startGame()">Start Game</button>
         <div id="result"></div>
     </div>
 
     <script>
+        function fuzzyMatch(input, choices) {
+            let bestMatch = '';
+            let bestScore = -1;
+
+            for (const choice of choices) {
+                const score = similarity(input, choice);
+                if (score > bestScore) {
+                    bestScore = score;
+                    bestMatch = choice;
+                }
+            }
+
+            return bestMatch;
+        }
+
+        function similarity(s1, s2) {
+            const longer = s1.length > s2.length ? s1 : s2;
+            const shorter = s1.length > s2.length ? s2 : s1;
+            const longerLength = longer.length;
+            if (longerLength === 0) {
+                return 1.0;
+            }
+            return (longerLength - editDistance(longer, shorter)) / parseFloat(longerLength);
+        }
+
+        function editDistance(s1, s2) {
+            s1 = s1.toLowerCase();
+            s2 = s2.toLowerCase();
+
+            const costs = new Array(s2.length + 1);
+            for (let i = 0; i <= s1.length; i++) {
+                let lastValue = i;
+                for (let j = 0; j <= s2.length; j++) {
+                    if (i === 0) {
+                        costs[j] = j;
+                    } else if (j > 0) {
+                        let newValue = costs[j - 1];
+                        if (s1.charAt(i - 1) !== s2.charAt(j - 1)) {
+                            newValue = Math.min(Math.min(newValue, lastValue), costs[j]) + 1;
+                        }
+                        costs[j - 1] = lastValue;
+                        lastValue = newValue;
+                    }
+                }
+                if (i > 0) {
+                    costs[s2.length] = lastValue;
+                }
+            }
+            return costs[s2.length];
+        }
+
         function startGame() {
-            var possibleMoves = ['rock', 'paper', 'scissor'];
-            var numRounds = parseInt(prompt('Enter number of rounds you want to play:'));
-            var userPoints = 0;
-            var computerPoints = 0;
-            var resultDiv = document.getElementById('result');
+            const possibleMoves = ['rock', 'paper', 'scissors'];
+            const numRounds = parseInt(prompt('Enter number of rounds you want to play:'));
+            let userPoints = 0;
+            let computerPoints = 0;
+            const resultDiv = document.getElementById('result');
             resultDiv.innerHTML = '';
 
-            for (var i = 0; i < numRounds; i++) {
-                var userMove = prompt('Enter your move (rock, paper, or scissor):').toLowerCase();
-                var computerMove = possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
+            for (let i = 0; i < numRounds; i++) {
+                let userMove = prompt('Enter your move (rock, paper, or scissors):').toLowerCase();
+                userMove = fuzzyMatch(userMove, possibleMoves);
+                const computerMove = possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
 
-                if (userMove === 'rock') {
-                    if (computerMove === 'paper') {
-                        computerPoints++;
-                    } else if (computerMove === 'scissor') {
-                        userPoints++;
-                    }
-                } else if (userMove === 'paper') {
-                    if (computerMove === 'rock') {
-                        userPoints++;
-                    } else if (computerMove === 'scissor') {
-                        computerPoints++;
-                    }
-                } else if (userMove === 'scissor') {
-                    if (computerMove === 'rock') {
-                        computerPoints++;
-                    } else if (computerMove === 'paper') {
-                        userPoints++;
-                    }
+                resultDiv.innerHTML += `<p>Round ${i + 1}: You chose ${userMove}, Computer chose ${computerMove}</p>`;
+
+                if (
+                    (userMove === 'rock' && computerMove === 'scissors') ||
+                    (userMove === 'paper' && computerMove === 'rock') ||
+                    (userMove === 'scissors' && computerMove === 'paper')
+                ) {
+                    userPoints++;
+                    resultDiv.innerHTML += '<p style="color: green;">You win this round!</p>';
+                } else if (
+                    (computerMove === 'rock' && userMove === 'scissors') ||
+                    (computerMove === 'paper' && userMove === 'rock') ||
+                    (computerMove === 'scissors' && userMove === 'paper')
+                ) {
+                    computerPoints++;
+                    resultDiv.innerHTML += '<p style="color: red;">Computer wins this round!</p>';
+                } else {
+                    resultDiv.innerHTML += '<p>It\'s a draw!</p>';
                 }
             }
 
             resultDiv.innerHTML += `<p>All ${numRounds} rounds finished !</p>`;
-            resultDiv.innerHTML += `<p>User Points = ${userPoints}</p>`;
+            resultDiv.innerHTML += `<p>Your Points = ${userPoints}</p>`;
             resultDiv.innerHTML += `<p>Computer Points = ${computerPoints}</p>`;
 
             if (userPoints > computerPoints) {
-                resultDiv.innerHTML += '<p style="color: green;">User Wins !!</p>';
+                resultDiv.innerHTML += '<p style="color: green;">You win the game!!</p>';
             } else if (userPoints < computerPoints) {
-                resultDiv.innerHTML += '<p style="color: red;">Computer Wins !!</p>';
+                resultDiv.innerHTML += '<p style="color: red;">Computer wins the game!!</p>';
             } else {
-                resultDiv.innerHTML += '<p>Draw</p>';
+                resultDiv.innerHTML += '<p>It\'s a draw!</p>';
             }
         }
     </script>
