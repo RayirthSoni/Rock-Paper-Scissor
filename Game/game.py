@@ -1,18 +1,44 @@
+'''
+This script contains functions to play the game
+'''
+
+# Ignore pylint warnings
+# pylint: disable=line-too-long
+
 import random
 from fuzzywuzzy import process
 
-def start_game():
-    possible_moves = ['rock', 'paper', 'scissors']
-    num_rounds = int(input('Enter number of rounds you want to play: '))
-    user_points = 0
-    computer_points = 0
 
-    for i in range(num_rounds):
-        user_move = input('Enter your move (rock, paper, or scissors): ').lower()
-        # Perform fuzzy matching to find the closest valid move
-        user_move, _ = process.extractOne(user_move, possible_moves)
+USER_POINTS = 0
+COMPUTER_POINTS = 0
+
+
+POSSIBLE_MOVES = ['rock', 'paper', 'scissors']
+num_rounds = int(input('Enter number of rounds you want to play: '))
+
+def get_computer_move() -> str:
+    """Function is used to get random move chosen by computer
+
+    Returns:
+        str: Random move chosen by computer
+    """
+    return random.choice(POSSIBLE_MOVES)
+
+computer_move = get_computer_move()
+
+def determine_winner():
+    pass
+
+
+for i in range(num_rounds):
+    user_move = input('Enter your move (rock, paper, or scissors): ').lower()
+    user_move, fuzzy_match = process.extractOne(user_move, possible_moves)
+    computer_move = random.choice(possible_moves)
+    
+
+
+def start_game():
         
-        computer_move = random.choice(possible_moves)
 
         print(f'Round {i + 1}: You chose {user_move}, Computer chose {computer_move}')
 
