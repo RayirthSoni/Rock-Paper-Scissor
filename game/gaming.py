@@ -1,6 +1,6 @@
-'''
+"""
 This script contains functions to play the game
-'''
+"""
 
 # Ignore pylint warnings
 # pylint: disable=line-too-long
@@ -25,13 +25,23 @@ logger.info("You will be playing %s against computer", NUMBER_ROUNDS)
 for round_cnt in range(NUMBER_ROUNDS):
     user_move = input("Enter your move (rock, paper, or scissors): ").lower()
     user_move, fuzzy_match = process.extractOne(user_move, POSSIBLE_MOVES)
-    user_move = user_move if fuzzy_match >= 60 else (_ for _ in ()).throw(Exception("Invalid move"))
+    user_move = (
+        user_move
+        if fuzzy_match >= 60
+        else (_ for _ in ()).throw(Exception("Invalid move"))
+    )
 
     computer_move = get_computer_move()
     user_points, computer_points = determine_winner(user_move, computer_move)
 
-    logger.info('Round %s - User chose %s, Computer chose - %s - User Points %s, Computer Points %s', 
-                round_cnt + 1, user_move, computer_move, USER_POINTS, COMPUTER_POINTS)
+    logger.info(
+        "Round %s - User chose %s, Computer chose - %s - User Points %s, Computer Points %s",
+        round_cnt + 1,
+        user_move,
+        computer_move,
+        USER_POINTS,
+        COMPUTER_POINTS,
+    )
 
     USER_POINTS += user_points
     COMPUTER_POINTS += computer_points
