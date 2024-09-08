@@ -8,6 +8,7 @@ Scirpt containing functions used to play game
 import random
 from fuzzywuzzy import process
 from configs.constants import Constants
+from typing import Tuple
 
 
 POSSIBLE_MOVES = Constants.Game.POSSIBLE_MOVES
@@ -22,9 +23,23 @@ def get_computer_move() -> str:
     return random.choice(POSSIBLE_MOVES)
 
 
-def determine_winner(user_move: str, computer_move: str):
-    
-    outcome = OUTCOMES[(user_move, computer_move)]
-    
-    
-    pass
+def determine_winner(user_move: str, computer_move: str) -> Tuple[int, int]:
+    """Function is used to determine who won the round based on user move and computer move
+
+    Args:
+        user_move (str): Move chosen by user
+        computer_move (str): Move chosen by computer
+
+    Returns:
+        Tuple[int, int]: user points, computer points
+    """
+
+    user_status = OUTCOMES.get((user_move, computer_move), None)
+    computer_status = OUTCOMES.get((computer_move, user_move), None)
+
+    if user_status:
+        return 1, 0
+    elif computer_status:
+        return 0, 1
+    else:
+        return 0, 0
