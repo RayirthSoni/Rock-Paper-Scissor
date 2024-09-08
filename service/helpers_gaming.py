@@ -6,9 +6,9 @@ Scirpt containing functions used to play game
 # pylint: disable=line-too-long
 
 import random
+from typing import Tuple
 from fuzzywuzzy import process
 from configs.constants import Constants
-from typing import Tuple
 
 
 POSSIBLE_MOVES = Constants.Game.POSSIBLE_MOVES
