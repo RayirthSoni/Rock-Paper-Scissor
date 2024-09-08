@@ -1,0 +1,7 @@
+# Jupyter Notebooks
+*.ipynb
+
+# Data Files
+*.json
+*.csv
+*.xlsx
