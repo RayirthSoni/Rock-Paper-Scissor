@@ -5,36 +5,27 @@ This script contains functions to play the game
 # Ignore pylint warnings
 # pylint: disable=line-too-long
 
-import random
+from configs.constants import Constants
+from service.helpers_game import get_computer_move, determine_winner
 from fuzzywuzzy import process
 
 
-USER_POINTS = 0
-COMPUTER_POINTS = 0
+POSSIBLE_MOVES = Constants.Game.POSSIBLE_MOVES
+USER_POINTS = Constants.Game.USER_POINTS
+COMPUTER_POINTS = Constants.Game.COMPUTER_POINTS
 
 
-POSSIBLE_MOVES = ['rock', 'paper', 'scissors']
-num_rounds = int(input('Enter number of rounds you want to play: '))
-
-def get_computer_move() -> str:
-    """Function is used to get random move chosen by computer
-
-    Returns:
-        str: Random move chosen by computer
-    """
-    return random.choice(POSSIBLE_MOVES)
-
-computer_move = get_computer_move()
-
-def determine_winner():
-    pass
+NUMBER_ROUNDS = int(input("Enter number of rounds you want to play: "))
 
 
-for i in range(num_rounds):
-    user_move = input('Enter your move (rock, paper, or scissors): ').lower()
-    user_move, fuzzy_match = process.extractOne(user_move, possible_moves)
-    computer_move = random.choice(possible_moves)
+for round_cnt in range(NUMBER_ROUNDS):
+    user_move = input("Enter your move (rock, paper, or scissors): ").lower()
+    user_move, fuzzy_match = process.extractOne(user_move, POSSIBLE_MOVES)
+    user_move = user_move if fuzzy_match >= 60 else (_ for _ in ()).throw(Exception("Invalid move"))
+    computer_move = get_computer_move()
     
+
+
 
 
 def start_game():
