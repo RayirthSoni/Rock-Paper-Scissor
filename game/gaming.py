@@ -34,6 +34,9 @@ for round_cnt in range(NUMBER_ROUNDS):
     computer_move = get_computer_move()
     user_points, computer_points = determine_winner(user_move, computer_move)
 
+    USER_POINTS += user_points
+    COMPUTER_POINTS += computer_points
+
     logger.info(
         "Round %s - User chose %s, Computer chose - %s - User Points %s, Computer Points %s",
         round_cnt + 1,
@@ -43,5 +46,3 @@ for round_cnt in range(NUMBER_ROUNDS):
         COMPUTER_POINTS,
     )
 
-    USER_POINTS += user_points
-    COMPUTER_POINTS += computer_points
