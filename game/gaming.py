@@ -6,7 +6,7 @@ This script contains functions to play the game
 # pylint: disable=line-too-long
 
 from configs.constants import Constants
-from service.helpers_game import get_computer_move, determine_winner
+from service.helpers_gaming import get_computer_move, determine_winner
 from utils.logger import logger
 from fuzzywuzzy import process
 
