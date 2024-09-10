@@ -8,12 +8,16 @@ Configurations for logging
 
 import logging
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(levelname)s %(asctime)s - %(message)s",
-    datefmt="%Y-%m-%d %H:%M:%S",
-    filename="game.log",
-    filemode="w",
-)
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
 
-logger = logging.getLogger()
+# Create a console handler and set level to info
+ch = logging.StreamHandler()
+ch.setLevel(logging.INFO)
+
+# Create a formatter and set it for the handler
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+ch.setFormatter(formatter)
+
+# Add the handler to the logger
+logger.addHandler(ch)

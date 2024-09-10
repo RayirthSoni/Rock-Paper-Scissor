@@ -1,5 +1,7 @@
-INFO 2024-09-09 17:43:27 - Welcome to Rock Paper Scissors!
-INFO 2024-09-09 17:43:29 - You will be playing 3 against computer
-INFO 2024-09-09 17:43:30 - Round 1 - User chose rock, Computer chose - scissors - User Points 0, Computer Points 0
-INFO 2024-09-09 17:43:32 - Round 2 - User chose paper, Computer chose - paper - User Points 1, Computer Points 0
-INFO 2024-09-09 17:43:35 - Round 3 - User chose scissors, Computer chose - rock - User Points 1, Computer Points 0
+INFO 2024-09-11 00:49:48 - Welcome to Rock Paper Scissors!
+INFO 2024-09-11 00:49:54 - You will be playing 5 rounds against computer
+INFO 2024-09-11 00:49:56 - Round 1 - User chose rock, Computer chose - rock - User Points 0, Computer Points 0
+INFO 2024-09-11 00:49:58 - Round 2 - User chose paper, Computer chose - rock - User Points 1, Computer Points 0
+INFO 2024-09-11 00:50:01 - Round 3 - User chose scissors, Computer chose - scissors - User Points 1, Computer Points 0
+INFO 2024-09-11 00:50:03 - Round 4 - User chose rock, Computer chose - paper - User Points 1, Computer Points 1
+INFO 2024-09-11 00:50:04 - Round 5 - User chose rock, Computer chose - rock - User Points 1, Computer Points 1
